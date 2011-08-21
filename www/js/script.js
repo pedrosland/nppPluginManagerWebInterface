@@ -310,7 +310,7 @@ function showVariableMenu(e){
 function variableSelected(e){
 	var $elem = $($('#variables').data('elem'));
 	
-	$elem.text($(e.originalEvent.originalTarget).text());
+	$elem.text($(e.target).text());
 }
 function hideVariablesMenu(){
 	$('#variables').remove();
