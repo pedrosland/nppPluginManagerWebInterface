@@ -16,6 +16,9 @@ if($plugin->latest_update != null): ?>
 <?php if($plugin->aliases != null): ?>
 <p>Aliases: <?php echo $plugin->aliases ?></p>
 <?php endif;
+if($plugin->dependencies != null): ?>
+<p>Dependencies: <?php echo $plugin->dependencies ?></p>
+<?php endif;
 if($plugin->author != null): ?>
 <p>Author: <?php echo $plugin->author ?></p>
 <?php endif;

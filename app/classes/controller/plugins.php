@@ -280,10 +280,10 @@ class Controller_Plugins extends Controller{
 		
 		$this->body->validate = $plugin;
 		$this->body->versions = $plugin->versions->find_all();
-		$this->body->unicode_install_steps = $plugin->unicode_install_steps();
 		$this->body->ansi_install_steps = $plugin->ansi_install_steps();
-		$this->body->unicode_uninstall_steps = $plugin->unicode_uninstall_steps();
+		$this->body->unicode_install_steps = $plugin->unicode_install_steps();
 		$this->body->ansi_uninstall_steps = $plugin->ansi_uninstall_steps();
+		$this->body->unicode_uninstall_steps = $plugin->unicode_uninstall_steps();
 		$this->body->add = false;
 	}
 
@@ -311,10 +311,10 @@ class Controller_Plugins extends Controller{
 		$this->body = new View('plugins/view');
 		
 		$this->body->plugin = $plugin;
-		$this->body->unicode_install_steps = $plugin->unicode_install_steps();
 		$this->body->ansi_install_steps = $plugin->ansi_install_steps();
-		$this->body->unicode_uninstall_steps = $plugin->unicode_uninstall_steps();
+		$this->body->unicode_install_steps = $plugin->unicode_install_steps();
 		$this->body->ansi_uninstall_steps = $plugin->ansi_uninstall_steps();
+		$this->body->unicode_uninstall_steps = $plugin->unicode_uninstall_steps();
 		$this->body->versions = $plugin->versions->find_all();
 	}
 	
@@ -354,7 +354,7 @@ class Controller_Plugins extends Controller{
 		}catch(Exception $e){
 			// Can't get the url!
 			
-			$ret = false;
+			$success = false;
 		}
 		
 		if($success === true){
@@ -418,6 +418,8 @@ class Controller_Plugins extends Controller{
 					
 					$plugin->name = $xml['name'];
 					$plugin->url = $plugin_url;
+					
+					//TODO: Should these be run through htmldecodechars?
 					$plugin->unicode_version = (string) $xml->unicodeVersion;
 					$plugin->ansi_version = (string) $xml->ansiVersion;
 					$plugin->homepage = (string) $xml->homepage;
@@ -449,26 +451,58 @@ class Controller_Plugins extends Controller{
 						$plugin->aliases = implode(', ', $aliases);
 					}
 					
-					//TODO: install and uninstall steps!
-					// These can be in two formats
-					$unicodeSteps = array();
-					$ansiSteps = array();
+					// Dependencies
+					if(isset($xml->dependencies) === true){
+						$dependencies = array();
+						foreach($xml->dependencies->children() as $dependency){
+							$dependencies[] = (string) $dependency['name'];
+						}
+						$plugin->dependencies = implode(', ', $dependencies);
+					}
+					
+					// Install and uninstall steps
+					// These can be in two formats!!
+					
+					$ansi_install_steps = array();
+					$unicode_install_steps = array();
 					
 					if(isset($xml->install) === true){
 						foreach($xml->install->children() as $elem){
 							$name = $elem->getName();
 							if($name == 'unicode'){
 								foreach($elem->children() as $childElem){
-									$unicodeSteps[] = self::parse_xml_step($childElem);
+									$unicode_install_steps[] = self::parse_xml_step($childElem);
 								}
 							}elseif($name == 'ansi'){
 								foreach($elem->children() as $childElem){
-									$ansiSteps[] = self::parse_xml_step($childElem);
+									$ansi_install_steps[] = self::parse_xml_step($childElem);
 								}
 							}else{
 								// We do this 2x because we want two seperate model instances
-								$unicodeSteps[] = self::parse_xml_step($elem);
-								$ansiSteps[] = self::parse_xml_step($elem);
+								$ansi_install_steps[] = self::parse_xml_step($elem);
+								$unicode_install_steps[] = self::parse_xml_step($elem);
+							}
+						}
+					}
+					
+					$ansi_uninstall_steps = array();
+					$unicode_uninstall_steps = array();
+					
+					if(isset($xml->uninstall) === true){
+						foreach($xml->uninstall->children() as $elem){
+							$name = $elem->getName();
+							if($name == 'unicode'){
+								foreach($elem->children() as $childElem){
+									$unicode_uninstall_steps[] = self::parse_xml_step($childElem);
+								}
+							}elseif($name == 'ansi'){
+								foreach($elem->children() as $childElem){
+									$ansi_uninstall_steps[] = self::parse_xml_step($childElem);
+								}
+							}else{
+								// We do this 2x because we want two seperate model instances
+								$ansi_uninstall_steps[] = self::parse_xml_step($elem);
+								$unicode_uninstall_steps[] = self::parse_xml_step($elem);
 							}
 						}
 					}
@@ -487,16 +521,28 @@ class Controller_Plugins extends Controller{
 							$model_version->save();
 						}
 						
-						foreach($unicodeSteps as $i=>$step){
+						foreach($ansi_install_steps as $i=>$step){
+							$step->save();
+							
+							$plugin->add_step($step, 0, $i);
+						}
+						
+						foreach($unicode_install_steps as $i=>$step){
 							$step->save();
 							
 							$plugin->add_step($step, 1, $i);
 						}
 						
-						foreach($ansiSteps as $i=>$step){
+						foreach($ansi_uninstall_steps as $i=>$step){
 							$step->save();
 							
-							$plugin->add_step($step, 0, $i);
+							$plugin->add_step($step, 2, $i);
+						}
+						
+						foreach($unicode_uninstall_steps as $i=>$step){
+							$step->save();
+							
+							$plugin->add_step($step, 3, $i);
 						}
 						
 						Db::query(null, 'COMMIT');
@@ -566,26 +612,55 @@ class Controller_Plugins extends Controller{
 						$plugin->aliases = implode(', ', $aliases);
 					}
 					
-					//TODO: install and uninstall steps!
-					// These can be in two formats
-					$unicodeSteps = array();
-					$ansiSteps = array();
+					// Dependencies
+					if(isset($xml->dependencies) === true){
+						$dependencies = array();
+						foreach($xml->dependencies->children() as $dependency){
+							$dependencies[] = (string) $dependency['name'];
+						}
+						$plugin->dependencies = implode(', ', $dependencies);
+					}
+					
+					$ansi_install_steps = array();
+					$unicode_install_steps = array();
 					
 					if(isset($xml->install) === true){
 						foreach($xml->install->children() as $elem){
 							$name = $elem->getName();
 							if($name == 'unicode'){
 								foreach($elem->children() as $childElem){
-									$unicodeSteps[] = self::parse_xml_step($childElem);
+									$unicode_install_steps[] = self::parse_xml_step($childElem);
 								}
 							}elseif($name == 'ansi'){
 								foreach($elem->children() as $childElem){
-									$ansiSteps[] = self::parse_xml_step($childElem);
+									$ansi_install_steps[] = self::parse_xml_step($childElem);
 								}
 							}else{
 								// We do this 2x because we want two seperate model instances
-								$unicodeSteps[] = self::parse_xml_step($elem);
-								$ansiSteps[] = self::parse_xml_step($elem);
+								$ansi_install_steps[] = self::parse_xml_step($elem);
+								$unicode_install_steps[] = self::parse_xml_step($elem);
+							}
+						}
+					}
+					
+					$ansi_uninstall_steps = array();
+					$unicode_install_steps = array();
+					
+					if(isset($xml->uninstall) === true){
+						foreach($xml->uninstall->children() as $elem){
+							$name = $elem->getName();
+							if($name == 'unicode'){
+								foreach($elem->children() as $childElem){
+									$unicode_install_steps[] = self::parse_xml_step($childElem);
+								}
+							}elseif($name == 'ansi'){
+								foreach($elem->children() as $childElem){
+									$ansi_uninstall_steps[] = self::parse_xml_step($childElem);
+								}
+							}else{
+								// We do this 2x because we want two seperate model instances
+								$ansi_uninstall_steps[] = self::parse_xml_step($elem);
+								$unicode_uninstall_steps[] = self::parse_xml_step($elem);
 							}
 						}
 					}
@@ -608,16 +683,28 @@ class Controller_Plugins extends Controller{
 						
 						$plugin->remove_all_steps();
 						
-						foreach($unicodeSteps as $i=>$step){
+						foreach($ansi_install_steps as $i=>$step){
+							$step->save();
+							
+							$plugin->add_step($step, 0, $i);
+						}
+						
+						foreach($unicode_install_steps as $i=>$step){
 							$step->save();
 							
 							$plugin->add_step($step, 1, $i);
 						}
 						
-						foreach($ansiSteps as $i=>$step){
+						foreach($ansi_uninstall_steps as $i=>$step){
 							$step->save();
 							
-							$plugin->add_step($step, 0, $i);
+							$plugin->add_step($step, 2, $i);
+						}
+						
+						foreach($unicode_uninstall_steps as $i=>$step){
+							$step->save();
+							
+							$plugin->add_step($step, 3, $i);
 						}
 						
 						Db::query(null, 'COMMIT');
@@ -714,6 +801,7 @@ class Controller_Plugins extends Controller{
 		
 		foreach($plugins as $plugin){
 			$pluginX = $xml->addChild('plugin');
+			// Attributes don't seem to need Html::chars
 			$pluginX['name'] = $plugin->name;
 			
 			if($plugin->ansi_version){
@@ -726,7 +814,7 @@ class Controller_Plugins extends Controller{
 			if($plugin->aliases){
 				$aliasesX = $pluginX->addChild('aliases');
 				
-				$aliases = explode(', ', $plugin->aliases);
+				$aliases = explode(', ', Html::chars($plugin->aliases));
 				
 				foreach($aliases as $alias){
 					$aliasX = $aliasesX->addChild('alias');
@@ -734,17 +822,28 @@ class Controller_Plugins extends Controller{
 				}
 			}
 			
+			if($plugin->dependencies){
+				$dependenciesX = $pluginX->addChild('dependencies');
+				
+				$dependencies = explode(', ', Html::chars($plugin->dependencies));
+				
+				foreach($dependencies as $dependency){
+					$dependencyX = $dependenciesX->addChild('plugin');
+					$dependencyX['name'] = $dependency;
+				}
+			}
+			
 			if($plugin->description){
-				$pluginX->addChild('description', str_replace("\n", '\n', $plugin->description));
+				$pluginX->addChild('description', Html::chars(str_replace("\n", '\n', $plugin->description)));
 			}
 			if($plugin->author){
-				$pluginX->addChild('author', $plugin->author);
+				$pluginX->addChild('author', Html::chars($plugin->author));
 			}
 			if($plugin->homepage){
-				$pluginX->addChild('homepage', $plugin->homepage);
+				$pluginX->addChild('homepage', Html::chars($plugin->homepage));
 			}
 			if($plugin->source_url){
-				$pluginX->addChild('sourceUrl', str_replace("\n", '\n', $plugin->source_url));
+				$pluginX->addChild('sourceUrl', Html::chars(str_replace("\n", '\n', $plugin->source_url)));
 			}
 			
 			//TODO: dependencies
@@ -759,17 +858,16 @@ class Controller_Plugins extends Controller{
 					
 					$versionX['number'] = $version->number;
 					$versionX['md5'] = $version->md5;
-					//TODO: Version comments
-					//$versionX['comment'] = $version->comment;
+					// Don't include version comments here as they don't add any value in the XML and just take up space.
 				}
 			}
 			
 			if($plugin->latest_update){
-				$pluginX->addChild('latestUpdate', str_replace("\n", '\n', $plugin->latest_update));
+				$pluginX->addChild('latestUpdate', Html::chars(str_replace("\n", '\n', $plugin->latest_update)));
 			}
 			
 			if($plugin->stability){
-				$pluginX->addChild('stability', $plugin->stability);
+				$pluginX->addChild('stability', Html::chars($plugin->stability));
 			}
 			
 			if($plugin->min_version){
@@ -871,7 +969,7 @@ class Controller_Plugins extends Controller{
 					$copyX['backup'] = 'true';
 				}
 			}elseif($step->url !== null){
-				$downloadX = $xml->addChild('download', $step->url);
+				$downloadX = $xml->addChild('download', Html::chars($step->url));
 			}elseif($step->run !== null){
 				$runX = $xml->addChild('run');
 				

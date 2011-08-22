@@ -70,6 +70,15 @@ echo Form::open(null, array('class'=>'ajax')) ?>
 	<?php endif ?>
 	</div>
 	<div>
+		<label for="dependencies">Dependencies</label>
+		<?php echo Form::input('dependencies', $validate->dependencies, array('id'=>'dependencies', 'class'=>'wide')) ?>
+	<?php if(isset($errors['dependencies'])): ?>
+		<p class="error"><?php echo $errors['dependencies'] ?></p>
+	<?php else: ?>
+		<p class="example">What other plugins does this plugin rely on eg PythonScript. Seperate them with commas.</p>
+	<?php endif ?>
+	</div>
+	<div>
 		<label for="min_version">Min Npp Version</label>
 		<?php echo Form::input('min_version', $validate->min_version, array('id'=>'min_version')) ?>
 	<?php if(isset($errors['min_version'])): ?>

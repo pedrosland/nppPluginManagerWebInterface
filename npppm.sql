@@ -35,6 +35,7 @@ CREATE TABLE `plugins` (
   `url` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_cs NOT NULL,
   `min_version` varchar(11) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
   `max_version` varchar(11) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
+  `dependencies` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

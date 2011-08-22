@@ -54,6 +54,9 @@ class Model_Plugin extends ORM{
 			'aliases' => array(
 				array('max_length', array(':value', 255)),
 			),
+			'dependencies' => array(
+				array('max_length', array(':value', 500)),
+			),
 		);
 	}
 	
@@ -69,6 +72,9 @@ class Model_Plugin extends ORM{
 				array('Model_Plugin::goodToNull'),
 			),
 			'aliases' => array(
+				array('Model_Plugin::formatAliases'),
+			),
+			'dependencies' => array(
 				array('Model_Plugin::formatAliases'),
 			),
 			TRUE => array(
