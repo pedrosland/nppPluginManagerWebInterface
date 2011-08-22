@@ -338,6 +338,31 @@ class Controller_Plugins extends Controller{
 		}
 	}
 	
+	public function action_store_valid_hash(){
+		$hash = $_POST['hash'];
+		
+		$hash = new Model_Validhash();
+		
+		$hash->values($_POST);
+		
+		$this->response->headers('Content-Type', 'application/json');
+		$this->render = false;
+		
+		try {
+			$hash->check();
+			$hash->save();
+			
+			$this->response->body(json_encode(array(
+					'error' => false
+				)));	
+		}catch(ORM_Validation_Exception $e){
+			$this->response->body(json_encode(array(
+					'error' => true
+				)));	
+		}
+		
+	}
+	
 	protected static function get_file_md5($url){
 		$tmp_name = tempnam('/tmp', 'npd_');
 		
