@@ -204,7 +204,7 @@ function showFiles(){
 	var $filesBox = $(this).closest('fieldset').data('filesBox');
 	
 	if($filesBox == null){
-		$filesBox = $('<div class="filesBox">Files: <ol class="noBullets"></ol></div>').insertAfter($(this).closest('fieldset'));
+		$filesBox = $('<div class="filesBox">Files: (add hashes for files you want to validate)<ol class="noBullets"></ol></div>').insertAfter($(this).closest('fieldset'));
 		$(this).closest('fieldset').data('filesBox', $filesBox);
 	}
 	

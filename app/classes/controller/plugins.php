@@ -344,7 +344,8 @@ class Controller_Plugins extends Controller{
 		$hash = new Model_Validhash();
 		
 		$hash->values($_POST);
-		
+		$hash->addedDate = date('Y-m-d');
+		$hash->username = $this->user->username;
 		$this->response->headers('Content-Type', 'application/json');
 		$this->render = false;
 		
@@ -970,6 +971,56 @@ class Controller_Plugins extends Controller{
 			
 			echo $xml->asXML();
 		}
+		
+		exit;
+	}
+	
+	
+	
+	public function action_generate_sql(){
+		
+		
+		
+		
+		$this->response->headers('Content-Type', 'text/plain');
+		
+		if($this->request->query('download')){
+			$this->response->headers('Content-Disposition', 'attachment; filename="files.sql');
+		}
+		
+		Session::instance()->write();
+		
+		$this->response->send_headers();
+		
+		$hashes = ORM::factory('Validhash')->find_all();
+		$prepend = Kohana::find_file('config', 'files_table', 'sql');
+		
+		if (count($prepend) !== 0){
+			echo file_get_contents($prepend[0]);
+		}
+		
+		echo "BEGIN TRANSACTION;\r\n";
+		
+			
+		
+		foreach($hashes as $hash){
+				if ($hash->hash != ''){
+					echo "INSERT INTO FileHash(md5sum, filename, pluginName, addedDate, status) VALUES('";
+					echo $hash->hash;
+					echo "','";
+					echo $hash->file;
+					echo "', NULL, '";
+					echo $hash->addedDate;
+					echo "','";
+					echo $hash->response;
+					echo "'); -- ";
+					echo $hash->username;
+					echo "\r\n";
+				}
+		}
+		
+		echo "COMMIT;\r\n";
+		
 		
 		exit;
 	}

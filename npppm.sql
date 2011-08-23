@@ -164,6 +164,8 @@ DROP TABLE IF EXISTS `valid_hash`;
 	`id` serial not null primary key, 
 	`file` varchar(255) not null, 
 	`hash` varchar(32) not null, 
-	`response` varchar(10) not null);
+	`addedDate` datetime not null,
+	`response` varchar(10) not null,
+	`username` varchar(32);
  
 -- 2011-08-21 11:22:52
