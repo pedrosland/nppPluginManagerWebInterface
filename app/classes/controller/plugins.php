@@ -670,7 +670,7 @@ class Controller_Plugins extends Controller{
 					}
 					
 					$ansi_uninstall_steps = array();
-					$unicode_install_steps = array();
+					$unicode_uninstall_steps = array();
 					
 					if(isset($xml->uninstall) === true){
 						foreach($xml->uninstall->children() as $elem){
