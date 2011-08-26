@@ -667,14 +667,14 @@ class Controller_Plugins extends Controller{
 					}
 					
 					$ansi_uninstall_steps = array();
-					$unicode_install_steps = array();
+					$unicode_uninstall_steps = array();
 					
 					if(isset($xml->uninstall) === true){
 						foreach($xml->uninstall->children() as $elem){
 							$name = $elem->getName();
 							if($name == 'unicode'){
 								foreach($elem->children() as $childElem){
-									$unicode_install_steps[] = self::parse_xml_step($childElem);
+									$unicode_uninstall_steps[] = self::parse_xml_step($childElem);
 								}
 							}elseif($name == 'ansi'){
 								foreach($elem->children() as $childElem){
