@@ -4,6 +4,7 @@
 	<?php echo HTML::anchor('plugins/add', 'Add a new plugin') ?> 
 	<?php echo HTML::anchor('plugins/add_xml', 'Add a new plugin from XML') ?> 
 	<?php echo HTML::anchor('plugins/generate_xml?download=1', 'Download XML file') ?>
+	<?php echo HTML::anchor('plugins/generate_sql?download=1', 'Download SQL file') ?>
 </div>
 
 <?php if(count($plugins) > 0): ?>

@@ -204,7 +204,7 @@ function showFiles(){
 	var $filesBox = $(this).closest('fieldset').data('filesBox');
 	
 	if($filesBox == null){
-		$filesBox = $('<div class="filesBox">Files: <ol class="noBullets"></ol></div>').insertAfter($(this).closest('fieldset'));
+		$filesBox = $('<div class="filesBox">Files: (add hashes for files you want to validate)<ol class="noBullets"></ol></div>').insertAfter($(this).closest('fieldset'));
 		$(this).closest('fieldset').data('filesBox', $filesBox);
 	}
 	
@@ -215,8 +215,30 @@ function showFiles(){
 	var len = files.length;
 	for(var i=0; i<len; i++){
 		$('<li>').text(files[i]).append(
-			$('<span>').text(hashes[i])
+			$('<span>').text(hashes[i]).append(
+			'<a id="addhash_' + i + '" href="javascript:storeValidHash($(\'a#addhash_' + i + '\'), \'' + hashes[i] + '\',\'' + files[i] + '\')">Add Hash</a>')
 		).appendTo($ol);
+	}
+}
+
+
+function storeValidHash($link, hash, file){
+	$.ajax({
+		url: '/plugins/store_valid_hash',
+		type: 'post',
+		data: {hash: hash, file: file, response: 'ok' },
+		success: function(data) { storeValidHashResponse($link, data); }
+		});
+}
+
+function storeValidHashResponse($link, data){
+	if(data.error == true)
+	{
+		$link.text('Already added');
+	}
+	else
+	{ 
+		$link.text('Added');
 	}
 }
 
