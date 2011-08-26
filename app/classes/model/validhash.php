@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 class Model_Validhash extends ORM{
 	
@@ -24,4 +24,4 @@ class Model_Validhash extends ORM{
 		);
 	}
 
-} 
+}
