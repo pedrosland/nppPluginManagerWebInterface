@@ -16,6 +16,8 @@ class Model_User extends Model_Auth_User{
 		);
 	}
 	
+	
+	
 	/**
 	 * Password validation for plain passwords.
 	 *

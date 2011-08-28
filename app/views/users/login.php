@@ -15,5 +15,7 @@
 		<label for="pass">Password</label>
 		<?php echo Form::password('password', '', array('id'=>'pass')) ?>
 	</div>
-	<?php echo Form::submit(null, 'Log in', array('class' => 'submit')) ?>
+	
+	<?php echo Form::hidden('from', $from);
+	      echo Form::submit(null, 'Log in', array('class' => 'submit')) ?>
 </form>
