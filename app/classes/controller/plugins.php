@@ -994,10 +994,11 @@ class Controller_Plugins extends Controller{
 		
 		$sql .= "BEGIN TRANSACTION;\r\n";
 		
-		$query = Db::insert('FileHash', array('md5sum', 'filename', 'pluginName', 'addedDate', 'status'));
 		
 		foreach($hashes as $hash){
+			
 			if ($hash->hash != ''){ // Will this ever have no hash?
+				$query = Db::insert('FileHash', array('md5sum', 'filename', 'pluginName', 'addedDate', 'status'));
 				$query->values(array(
 					$hash->hash,
 					$hash->file,
@@ -1005,10 +1006,11 @@ class Controller_Plugins extends Controller{
 					$hash->addedDate,
 					$hash->response,
 				));
+				$sql .= $query. '  --' . $hash->username . ";\r\n";
 			}
 		}
 		
-		$sql .= $query.";\r\n";
+		
 		
 		$sql .= "COMMIT;\r\n";
 		
