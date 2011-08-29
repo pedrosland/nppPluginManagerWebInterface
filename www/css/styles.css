@@ -273,9 +273,17 @@ textarea#xml{
 	width: 44em;
 }
 .filesBox span{
-	font-size: 90%;
 	color: #aaa;
+	font-size: 90%;
+}
+.filesBox .name{
+	color: #000;
+	font-size: 100%;
 	display: block;
+}
+.filesBox .md5{
+	display: inline-block;
+	min-width: 20em;
 }
 
 .noPad{

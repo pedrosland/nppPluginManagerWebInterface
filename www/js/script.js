@@ -214,32 +214,46 @@ function showFiles(){
 	
 	var len = files.length;
 	for(var i=0; i<len; i++){
-		$('<li>').text(files[i]).append(
-			$('<span>').text(hashes[i]).append(
-			'<a id="addhash_' + i + '" href="javascript:storeValidHash($(\'a#addhash_' + i + '\'), \'' + hashes[i] + '\',\'' + files[i] + '\')">Add Hash</a>')
-		).appendTo($ol);
+		$li = $('<li>').append(
+			$('<span class="name">').text(files[i])
+		);
+		
+		if(hashes[i] != ''){
+			$li.append(
+				$('<span class="md5">').text(hashes[i]),
+				$('<a id="addhash_' + i + '">').text('Add Hash').click(storeValidHash)
+			);
+		}
+		
+		$li.appendTo($ol);
 	}
 }
 
 
-function storeValidHash($link, hash, file){
+function storeValidHash(hash, file){
+	var $link = $(this);
+	var $li = $link.parent();
+	
 	$.ajax({
 		url: '/plugins/store_valid_hash',
 		type: 'post',
-		data: {hash: hash, file: file, response: 'ok' },
+		data: {hash: $li.find('.md5').text(), file: $li.find('.name').text(), response: 'ok' },
 		success: function(data) { storeValidHashResponse($link, data); }
-		});
+	});
 }
 
 function storeValidHashResponse($link, data){
-	if(data.error == true)
-	{
-		$link.text('Already added');
+	var msg = '';
+	
+	if(data.error == true){
+		msg = 'Already added';
+	}else{ 
+		msg = 'Added';
 	}
-	else
-	{ 
-		$link.text('Added');
-	}
+	
+	$('<span class="added">').text(msg).replaceAll($link);
+	
+	return false;
 }
 
 var i=0;
@@ -428,7 +442,7 @@ function addVersion(){
 		'<div><label for="md5_'+lastVersion+'">MD5</label> <input type="text" id="md5_'+lastVersion+'" name="version['+lastVersion+'][md5]" class="wide" /></div>' +
 		'<div><label for="version_'+lastVersion+'">Version</label> <input type="text" id="version_'+lastVersion+'" name="version['+lastVersion+'][number]" /></div>' +
 		'<div><label for="comment_'+lastVersion+'">Comment</label> <input type="text" id="comment_'+lastVersion+'" name="version['+lastVersion+'][comment]" class="wide" /></div>' +
-		'</div>'
+		'<a href="#" class="remove">Remove</a></div>'
 	);
 	lastVersion++;
 	return false;
