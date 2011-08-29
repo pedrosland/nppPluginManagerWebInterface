@@ -16,7 +16,7 @@ class Controller_Users extends Controller{
 			if($this->auth->login($this->request->post('username'), $this->request->post('password')) === true){
 				
 				if ($this->request->post('from') != ''){
-					$this->request->redirect('../' . $this->request->post('from'));
+					$this->request->redirect($this->request->post('from'));
 				} else {
 					$this->request->redirect('plugins');
 				}
@@ -36,7 +36,7 @@ class Controller_Users extends Controller{
 			
 			$user = new Model_User();
 			
-			//try{
+			try{
 				$user->create_user($this->request->post(), array('username', 'password', 'email'));
 				
 				$user->authorisation_token = $this->generate_auth_token();
@@ -48,16 +48,14 @@ class Controller_Users extends Controller{
 				// Disabled for authorisation
 				//$user->add('roles', $login_role);
 				
-				
-				
 				Session::instance()->write();
 				
 				$this->body = new View('users/registered');
 				
 				$this->request->redirect('plugins');
-			// }catch(ORM_Validation_Exception $e){
-				// $this->body->errors = Arr::flatten($e->errors('model'));
-			// }
+			}catch(ORM_Validation_Exception $e){
+				$this->body->errors = Arr::flatten($e->errors('model'));
+			}
 		}
 	}
 	
@@ -70,7 +68,7 @@ class Controller_Users extends Controller{
 		if ($user->loaded()){
 			$user->authorisation_token == $this->request->query('auth');
 			$user->verified = true;
-			$user->save();
+			$user->save(); // This shouldn't throw any validation exceptions here
 			$this->email_admin($user->username, $user->email);
 			$this->body = new View("users/verified");
 		}
@@ -132,7 +130,7 @@ The Admin System.
 	
 	
 	private function generate_auth_token() {
-		return substr(base64_encode(hash('sha512', 'Some Magic Piece of text ' . date('Ymd Hisu - l') . rand(1, 32767))), 0, 20);
+		return substr(base64_encode(hash('sha512', Kohana::$config->load('auth.hash_key') . date('Ymd Hisu - l') . rand(1, 32767))), 0, 20);
 	}
 	
 	
@@ -152,15 +150,8 @@ The Admin System.
 			if ($user->loaded()){
 				
 				$login_role = ORM::factory('role',array('name' => 'login'));
-				try {
 				
 				$user->add('roles', $login_role);
-				}
-				catch(Exception $e)
-				{
-				}
-				# Is this necessary? Do we need to save after doing an "add"?
-				$user->save();
 				
 				$this->body = new View('users/authorised');
 				$this->body->authuser = $user;
