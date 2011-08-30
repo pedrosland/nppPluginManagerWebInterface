@@ -152,7 +152,7 @@ form div {
 .error{
 	color: #C73E60;
 }
-.area .example, .area .error{
+.area .example, .area .error, .error.no-indent{
 	margin: 0;
 	padding-left: 0;
 }

@@ -426,14 +426,14 @@ class Controller_Plugins extends Controller{
 			
 			try{
 				$xml = new SimpleXMLElement($_POST['xml']);
-			}catch(Exeption $e){
+			}catch(Exception $e){
 				// Really badly formed xml
 				$this->body->error = 'Your xml is badly formed.';
 			}
 			
 			//die(print_r(libxml_get_errors(), true));
 			
-			if($xml !== false){
+			if(isset($xml) === true && $xml !== false){
 				if($xml->getName() == 'plugin'){
 					$plugin = new Model_Plugin();
 					
@@ -591,12 +591,12 @@ class Controller_Plugins extends Controller{
 			
 			try{
 				$xml = new SimpleXMLElement($_POST['xml']);
-			}catch(Exeption $e){
+			}catch(Exception $e){
 				// Really badly formed xml
 				$this->body->error = 'Your xml is badly formed.';
 			}
 			
-			if($xml !== false){
+			if(isset($xml) === true && $xml !== false){
 				if($xml->getName() == 'plugin'){
 					$plugin = new Model_Plugin(array('url' => $this->request->param('id')));
 					
