@@ -1,10 +1,4 @@
 ﻿<h1>Authorised</h1>
+<p>User <?php echo $authuser->username; ?> has been authorised.</p>
 
-<?php echo Form::open('users/authorised') ?>
-	User <?php echo $authuser->username; ?> has been authorised.
-	
-	<br/><br/>
-	<a href="../authorise">Authorisation list</a>
-			
-	
-</form>
+<p><?php echo HTML::anchor('users/authorise', 'Authorisation list') ?></p>
