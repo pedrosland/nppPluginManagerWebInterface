@@ -824,7 +824,7 @@ class Controller_Plugins extends Controller{
 		
 		foreach($plugins as $plugin){
 			$pluginX = $xml->addChild('plugin');
-			// Attributes don't seem to need Html::chars
+			// Attributes don't seem to need HTML::chars
 			$pluginX['name'] = $plugin->name;
 			
 			if($plugin->ansi_version){
@@ -837,7 +837,7 @@ class Controller_Plugins extends Controller{
 			if($plugin->aliases){
 				$aliasesX = $pluginX->addChild('aliases');
 				
-				$aliases = explode(', ', Html::chars($plugin->aliases));
+				$aliases = explode(', ', HTML::chars($plugin->aliases));
 				
 				foreach($aliases as $alias){
 					$aliasX = $aliasesX->addChild('alias');
@@ -848,7 +848,7 @@ class Controller_Plugins extends Controller{
 			if($plugin->dependencies){
 				$dependenciesX = $pluginX->addChild('dependencies');
 				
-				$dependencies = explode(', ', Html::chars($plugin->dependencies));
+				$dependencies = explode(', ', HTML::chars($plugin->dependencies));
 				
 				foreach($dependencies as $dependency){
 					$dependencyX = $dependenciesX->addChild('plugin');
@@ -857,16 +857,16 @@ class Controller_Plugins extends Controller{
 			}
 			
 			if($plugin->description){
-				$pluginX->addChild('description', Html::chars(str_replace("\n", '\n', $plugin->description)));
+				$pluginX->addChild('description', HTML::chars(str_replace("\n", '\n', $plugin->description)));
 			}
 			if($plugin->author){
-				$pluginX->addChild('author', Html::chars($plugin->author));
+				$pluginX->addChild('author', HTML::chars($plugin->author));
 			}
 			if($plugin->homepage){
-				$pluginX->addChild('homepage', Html::chars($plugin->homepage));
+				$pluginX->addChild('homepage', HTML::chars($plugin->homepage));
 			}
 			if($plugin->source_url){
-				$pluginX->addChild('sourceUrl', Html::chars(str_replace("\n", '\n', $plugin->source_url)));
+				$pluginX->addChild('sourceUrl', HTML::chars(str_replace("\n", '\n', $plugin->source_url)));
 			}
 			
 			//TODO: dependencies
@@ -886,11 +886,11 @@ class Controller_Plugins extends Controller{
 			}
 			
 			if($plugin->latest_update){
-				$pluginX->addChild('latestUpdate', Html::chars(str_replace("\n", '\n', $plugin->latest_update)));
+				$pluginX->addChild('latestUpdate', HTML::chars(str_replace("\n", '\n', $plugin->latest_update)));
 			}
 			
 			if($plugin->stability){
-				$pluginX->addChild('stability', Html::chars($plugin->stability));
+				$pluginX->addChild('stability', HTML::chars($plugin->stability));
 			}
 			
 			if($plugin->min_version){
@@ -1061,7 +1061,7 @@ class Controller_Plugins extends Controller{
 					$copyX['backup'] = 'true';
 				}
 			}elseif($step->url !== null){
-				$downloadX = $xml->addChild('download', Html::chars($step->url));
+				$downloadX = $xml->addChild('download', HTML::chars($step->url));
 			}elseif($step->run !== null){
 				$runX = $xml->addChild('run');
 				

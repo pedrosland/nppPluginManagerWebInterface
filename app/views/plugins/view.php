@@ -23,10 +23,10 @@ if($plugin->author != null): ?>
 <p>Author: <?php echo $plugin->author ?></p>
 <?php endif;
 if($plugin->homepage != null): ?>
-<p>Homepage: <?php echo Html::anchor($plugin->homepage) ?></p>
+<p>Homepage: <?php echo HTML::anchor($plugin->homepage) ?></p>
 <?php endif;
 if($plugin->source_url != null): ?>
-<p>Download source: <?php echo Html::anchor($plugin->source_url) ?></p>
+<p>Download source: <?php echo HTML::anchor($plugin->source_url) ?></p>
 <?php endif;
 if($plugin->min_version != null): ?>
 <p>Min NPP version: <?php echo $plugin->min_version ?></p>
@@ -44,7 +44,7 @@ if($plugin->max_version != null): ?>
 		if($step->from !== null): ?>
 		<li>Copy from: <?php echo $step->from ?> To: <?php echo $step->to ?> <?php if($step->validate) echo 'Validate ' ?> <?php if($step->backup) echo 'Backup ' ?> <?php if($step->is_dir) echo 'Directory ' ?></li>
 		<?php elseif($step->url !== null): ?>
-		<li>Download <?php echo Html::anchor($step->url) ?> MD5: <?php echo $step->md5 ?></li>
+		<li>Download <?php echo HTML::anchor($step->url) ?> MD5: <?php echo $step->md5 ?></li>
 		<?php elseif($step->run !== null): ?>
 		<li>Run <?php echo $step->run ?> Args: <?php echo $step->arguments ?> <?php if($step->outside) echo 'Outside ' ?></li>
 		<?php else: ?>
@@ -58,7 +58,7 @@ if($plugin->max_version != null): ?>
 		if($step->from !== null): ?>
 		<li>Copy from: <?php echo $step->from ?> To: <?php echo $step->to ?> <?php if($step->validate) echo 'Validate ' ?> <?php if($step->backup) echo 'Backup ' ?> <?php if($step->is_dir) echo 'Directory ' ?></li>
 		<?php elseif($step->url !== null): ?>
-		<li>Download <?php echo Html::anchor($step->url) ?> MD5: <?php echo $step->md5 ?></li>
+		<li>Download <?php echo HTML::anchor($step->url) ?> MD5: <?php echo $step->md5 ?></li>
 		<?php elseif($step->run !== null): ?>
 		<li>Run <?php echo $step->run ?> Args: <?php echo $step->arguments ?> <?php if($step->outside) echo 'Outside ' ?></li>
 		<?php else: ?>
@@ -78,7 +78,7 @@ if($plugin->max_version != null): ?>
 		if($step->from !== null): ?>
 		<li>Copy from: <?php echo $step->from ?> To: <?php echo $step->to ?> <?php if($step->validate) echo 'Validate ' ?> <?php if($step->backup) echo 'Backup ' ?> <?php if($step->is_dir) echo 'Directory ' ?></li>
 		<?php elseif($step->url !== null): ?>
-		<li>Download <?php echo Html::anchor($step->url) ?> MD5: <?php echo $step->md5 ?></li>
+		<li>Download <?php echo HTML::anchor($step->url) ?> MD5: <?php echo $step->md5 ?></li>
 		<?php elseif($step->run !== null): ?>
 		<li>Run <?php echo $step->run ?> Args: <?php echo $step->arguments ?> <?php if($step->outside) echo 'Outside ' ?></li>
 		<?php else: ?>
@@ -92,7 +92,7 @@ if($plugin->max_version != null): ?>
 		if($step->from !== null): ?>
 		<li>Copy from: <?php echo $step->from ?> To: <?php echo $step->to ?> <?php if($step->validate) echo 'Validate ' ?> <?php if($step->backup) echo 'Backup ' ?> <?php if($step->is_dir) echo 'Directory ' ?></li>
 		<?php elseif($step->url !== null): ?>
-		<li>Download <?php echo Html::anchor($step->url) ?> MD5: <?php echo $step->md5 ?></li>
+		<li>Download <?php echo HTML::anchor($step->url) ?> MD5: <?php echo $step->md5 ?></li>
 		<?php elseif($step->run !== null): ?>
 		<li>Run <?php echo $step->run ?> Args: <?php echo $step->arguments ?> <?php if($step->outside) echo 'Outside ' ?></li>
 		<?php else: ?>
