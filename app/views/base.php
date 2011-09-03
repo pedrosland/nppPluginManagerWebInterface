@@ -3,20 +3,20 @@
 <head>
 	<title>Notepad++ Plugins</title>
 	
-	<link rel="stylesheet" type="text/css" href="/css/styles.css" />
-	<link rel="stylesheet" type="text/css" href="/css/jquery-ui-1.8.15.custom.css" />
+	<link rel="stylesheet" type="text/css" href="/npp/pm/admin/css/styles.css" />
+	<link rel="stylesheet" type="text/css" href="/npp/pm/admin/css/jquery-ui-1.8.15.custom.css" />
 	
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.15/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="/js/script.js"></script>
+	<script type="text/javascript" src="/npp/pm/admin/js/script.js"></script>
 <?php if($admin === true): ?>
-	<script type="text/javascript" src="/js/admin.js"></script>
+	<script type="text/javascript" src="/npp/pm/admin/js/admin.js"></script>
 <?php endif ?>
 </head>
 <body>
 <div id="header">
 	<div id="hcontent">
-		<?php echo HTML::anchor('/plugins', 'Npp Plugins Repository', array('id'=>'logo')) ?>
+		<?php echo HTML::anchor('plugins', 'Npp Plugins Repository', array('id'=>'logo')) ?>
 <?php if($logged_in !== true): ?>
 		<div id="login">
 			<?php echo Form::open('users/login') ?>
