@@ -3,15 +3,15 @@
 <head>
 	<title>Notepad++ Plugins</title>
 	
-	<link rel="stylesheet" type="text/css" href="/npp/pm/admin/css/styles.css" />
-	<link rel="stylesheet" type="text/css" href="/npp/pm/admin/css/jquery-ui-1.8.15.custom.css" />
+	<?php echo HTML::style('css/styles.css');
+	echo HTML::style('css/jquery-ui-1.8.15.custom.css') ?>
 	
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.15/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="/npp/pm/admin/js/script.js"></script>
-<?php if($admin === true): ?>
-	<script type="text/javascript" src="/npp/pm/admin/js/admin.js"></script>
-<?php endif ?>
+	<?php echo HTML::script('js/script.js') ?>
+<?php if($admin === true):
+	echo HTML::script('js/admin.js');
+endif ?>
 </head>
 <body>
 <div id="header">

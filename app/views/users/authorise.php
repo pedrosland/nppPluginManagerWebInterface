@@ -1,9 +1,10 @@
 <h1>Authorise</h1>
 
 <?php echo Form::open('users/authorise') ?>
-	<?php foreach($users as $user) { 
-			echo "<br/><a href='authorise/$user->username'>$user->username</a>";
-		} ?>
-		
+	<ul>
+	<?php foreach($users as $user):
+		echo '<li>'.HTML::anchor('users/authorise/'.$user->username, $user->username).'</li>';
+	endforeach ?>
+	</ul>
 	
 </form>

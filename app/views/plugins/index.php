@@ -30,15 +30,15 @@
 	<tbody>
 <?php foreach($plugins as $plugin): ?>
 		<tr>
-			<td><a href="/plugins/view/<?php echo $plugin->url ?>"><?php echo $plugin->name ?></a></td>
+			<td><?php echo HTML::anchor('plugins/view/' . $plugin->url, $plugin->name) ?></td>
 			<td><?php echo $plugin->ansi_version ?></td>
 			<td><?php echo $plugin->unicode_version ?></td>
 			<td><?php echo Text::limit_chars($plugin->description, 100) ?></td>
 			<td><?php echo $plugin->author ?></td>
 	<?php if($logged_in === true): ?>
-			<td><a href="/plugins/edit/<?php echo $plugin->url ?>">Edit</a></td>
+			<td><?php echo HTML::anchor('plugins/edit/' . $plugin->url, 'Edit') ?></td>
 		<?php if($admin === true): ?>
-			<td><a href="/plugins/delete/<?php echo $plugin->url ?>" class="admin confirm">Delete</a></td>
+			<td><?php echo HTML::anchor('plugins/delete/' . $plugin->url, 'Delete', array('class'=>'admin confirm')) ?></td>
 		<?php endif ?>
 	<?php endif ?>
 		</tr>

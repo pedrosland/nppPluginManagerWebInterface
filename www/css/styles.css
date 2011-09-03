@@ -152,7 +152,7 @@ form div {
 .error{
 	color: #C73E60;
 }
-.area .example, .area .error{
+.area .example, .area .error, .error.no-indent{
 	margin: 0;
 	padding-left: 0;
 }
@@ -273,9 +273,17 @@ textarea#xml{
 	width: 44em;
 }
 .filesBox span{
-	font-size: 90%;
 	color: #aaa;
+	font-size: 90%;
+}
+.filesBox .name{
+	color: #000;
+	font-size: 100%;
 	display: block;
+}
+.filesBox .md5{
+	display: inline-block;
+	min-width: 20em;
 }
 
 .noPad{
