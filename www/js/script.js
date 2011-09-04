@@ -136,7 +136,7 @@ function getMd5(){
 	$elem = $elem.parent();
 	
 	$.ajax({
-		url: '/plugins/get_md5',
+		url: base+'plugins/get_md5',
 		type: 'post',
 		data: {url: $prev.val() },
 		dataType: 'json',
@@ -235,7 +235,7 @@ function storeValidHash(hash, file){
 	var $li = $link.parent();
 	
 	$.ajax({
-		url: '/plugins/store_valid_hash',
+		url: base+'plugins/store_valid_hash',
 		type: 'post',
 		data: {hash: $li.find('.md5').text(), file: $li.find('.name').text(), response: 'ok' },
 		success: function(data) { storeValidHashResponse($link, data); }
@@ -370,7 +370,7 @@ function formSubmit(){
 		dataType: 'json',
 		success: function(data){
 			if(data.url){
-				window.location = '/'+data.url;
+				window.location = base+data.url;
 			}else{
 				var list = new Array();
 				

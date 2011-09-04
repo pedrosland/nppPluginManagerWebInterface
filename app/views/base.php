@@ -6,6 +6,10 @@
 	<?php echo HTML::style('css/styles.css');
 	echo HTML::style('css/jquery-ui-1.8.15.custom.css') ?>
 	
+	<script type="text/javascript">
+		var base = '<?php echo URL::base() ?>';
+	</script>
+	
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.15/jquery-ui.min.js"></script>
 	<?php echo HTML::script('js/script.js') ?>

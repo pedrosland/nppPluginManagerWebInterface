@@ -111,7 +111,7 @@ class Controller_Plugins extends Controller{
 				
 				if($this->request->is_ajax() === true){
 					$this->render = false;
-					$this->response->headers['Content-Type'] = 'application/json';
+					$this->response->headers('Content-Type', 'application/json');
 					$this->response->body(json_encode(array(
 						'url' => 'plugins/view/'.$plugin->url
 					)));
@@ -122,7 +122,7 @@ class Controller_Plugins extends Controller{
 			}else{
 				if($this->request->is_ajax() === true){
 					$this->render = false;
-					$this->response->headers['Content-Type'] = 'application/json';
+					$this->response->headers('Content-Type', 'application/json');
 					$this->response->body(json_encode(array(
 						'errors' => $prev_error->errors('add_plugin')
 					)));
@@ -252,7 +252,7 @@ class Controller_Plugins extends Controller{
 			
 				if($this->request->is_ajax() === true){
 					$this->render = false;
-					$this->response->headers['Content-Type'] = 'application/json';
+					$this->response->headers('Content-Type', 'application/json');
 					$this->response->body(json_encode(array(
 						'url' => 'plugins/view/'.$plugin->url
 					)));
@@ -264,7 +264,7 @@ class Controller_Plugins extends Controller{
 			}else{
 				if($this->request->is_ajax() === true){
 					$this->render = false;
-					$this->response->headers['Content-Type'] = 'application/json';
+					$this->response->headers('Content-Type', 'application/json');
 					$this->response->body(json_encode(array(
 						'errors' => $prev_error->errors('add_plugin')
 					)));
