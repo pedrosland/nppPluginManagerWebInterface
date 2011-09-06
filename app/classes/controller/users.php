@@ -51,8 +51,6 @@ class Controller_Users extends Controller{
 				Session::instance()->write();
 				
 				$this->body = new View('users/registered');
-				
-				$this->request->redirect('plugins');
 			}catch(ORM_Validation_Exception $e){
 				$this->body->errors = Arr::flatten($e->errors('model'));
 			}
