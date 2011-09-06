@@ -1006,7 +1006,7 @@ class Controller_Plugins extends Controller{
 					$hash->addedDate,
 					$hash->response,
 				));
-				$sql .= $query. '  --' . $hash->username . ";\r\n";
+				$sql .= $query. ';  --' . $hash->username . "\r\n";
 			}
 		}
 		
