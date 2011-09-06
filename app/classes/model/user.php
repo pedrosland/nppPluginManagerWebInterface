@@ -16,7 +16,14 @@ class Model_User extends Model_Auth_User{
 		);
 	}
 	
-	
+	public function not_verified(){
+		$qry_login = DB::select('*')->from('roles_users')
+					->where('roles_users.user_id', '=', DB::expr('user.id'))
+					->where('roles_users.role_id', '=', '1');
+					
+		return $this->where('verified', '=', '1')
+					->where(NULL, 'not exists', $qry_login);
+	}
 	
 	/**
 	 * Password validation for plain passwords.

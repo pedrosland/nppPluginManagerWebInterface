@@ -130,7 +130,6 @@ label {
 fieldset {
 /*	display: inline;*/
 	border: 1px solid black;
-	-moz-border-radius: 2px;
 	border-radius: 2px;
 	vertical-align: top;
 	clear: both;
@@ -159,6 +158,11 @@ form div {
 
 .errorField{
 	box-shadow: 0 0 3px #C73E60;
+}
+
+.success{
+	padding: 3px 0 0 3px;
+	color: #669C4A;
 }
 
 #versions{
@@ -234,7 +238,6 @@ form div {
 	background: #fff;
 	border: 1px solid #ccc;
 	width: 98px;
-	-moz-border-radius: 2px;
 	border-radius: 2px;
 }
 #variables li, .noBullets{
@@ -252,7 +255,6 @@ form div {
 	padding: 1px 0 1px 2px;
 	width: 96px;
 	display: inline-block;
-	-moz-border-radius: 2px;
 	border-radius: 2px;
 	text-decoration: none;
 	vertical-align: top;
@@ -336,4 +338,8 @@ thead tr:last-child th:last-child{
 }
 #header .admin{
 	color: #fff;
+}
+
+ul.spaced li{
+	padding: 0.5em 0;
 }
