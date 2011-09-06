@@ -64,8 +64,7 @@ class Controller_Users extends Controller{
 				->find();
 			
 
-		if ($user->loaded()){
-			$user->authorisation_token == $this->request->query('auth');
+		if ($user->loaded() && $user->authorisation_token == $this->request->query('auth')) {
 			$user->verified = true;
 			$user->save(); // This shouldn't throw any validation exceptions here
 			$this->email_admin($user->username, $user->email);
@@ -123,7 +122,7 @@ http://www.brotherstone.co.uk/npp/pm/admin/users/authorise
 Many thanks,
 The Admin System.
 ";
-		mail($email, $subject, $message, "From: Notepad++ Plugin Admin <$from>\r\nReply-To: $replyto");
+		mail($to, $subject, $message, "From: Notepad++ Plugin Admin <$from>\r\nReply-To: $replyto");
 
 	}
 	
