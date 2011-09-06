@@ -154,7 +154,8 @@ CREATE TABLE `users` (
   `password` varchar(64) NOT NULL,
   `logins` int(10) unsigned NOT NULL DEFAULT '0',
   `last_login` int(10) unsigned DEFAULT NULL,
-  `verified` bool NOT NULL DEFAULT 0,
+  `authorisation_token` text,
+  `verified` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniq_username` (`username`),
   UNIQUE KEY `uniq_email` (`email`)

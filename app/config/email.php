@@ -4,7 +4,7 @@ return array
 (
 	'default' => array
 	(
-		'from'       => 'davebrotherstone@t-online.de',
+		'from'       => 'davegb@brothab1.miniserver.com',
 		'replyto'	 => 'davegb@pobox.com'
 	),
 );

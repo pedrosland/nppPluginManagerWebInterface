@@ -20,8 +20,9 @@ endif ?>
 <body>
 <div id="header">
 	<div id="hcontent">
-		<?php echo HTML::anchor('plugins', 'Npp Plugins Repository', array('id'=>'logo')) ?>
+		
 <?php if($logged_in !== true): ?>
+ 	<?php echo HTML::anchor('welcome', 'Notepad++ Plugins Repository', array('id'=>'logo')) ?>
 		<div id="login">
 			<?php echo Form::open('users/login') ?>
 				<label for="l_username">Username</label>
@@ -32,6 +33,7 @@ endif ?>
 			</form>
 		</div>
 <?php else: ?>
+	<?php echo HTML::anchor('plugins', 'Notepad++ Plugins Repository', array('id' =>'logo')) ?>
 		<div id="user">
 	<?php if($admin === true): ?>
 			<span class="admin">Admin</span>
