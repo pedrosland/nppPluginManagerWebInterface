@@ -22,6 +22,19 @@ class Controller_Users extends Controller{
 				}
 			}else{
 				$this->body->error = 'Your username and password do not match.';
+				
+				$user = ORM::factory('user')->where('username', '=', $this->request->post('username'))->find();
+				
+				if($user->loaded() !== TRUE){
+					return;
+				}
+				if($user->password === Auth::instance()->hash($this->request->post('password'))){
+					if($user->verified == 0){
+						$this->body->error = 'You have not verified your email address. You must do this before you can log in.';
+					}else{
+						$this->body->error = 'For security reasons, please wait until an admin approves your account.';
+					}
+				}
 			}
 		}
 	}

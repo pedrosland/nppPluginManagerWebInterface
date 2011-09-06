@@ -1,12 +1,13 @@
 <h1>Log in</h1>
 
-<?php if(isset($error) === false): ?>
-<p>You must be logged in to use this site.</p>
-<?php else: ?>
-<p><?php echo $error ?></p>
-<?php endif ?>
-
 <?php echo Form::open('users/login') ?>
+	
+	<?php if(isset($error) === false): ?>
+	<p>You must be logged in to use this site.</p>
+	<?php else: ?>
+	<p class="error no-indent"><?php echo $error ?></p>
+	<?php endif ?>
+	
 	<div>
 		<label for="username">Username</label>
 		<?php echo Form::input('username', '', array('id'=>'username')) ?>
