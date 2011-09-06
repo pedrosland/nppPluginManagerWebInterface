@@ -22,6 +22,19 @@ class Controller_Users extends Controller{
 				}
 			}else{
 				$this->body->error = 'Your username and password do not match.';
+				
+				$user = ORM::factory('user')->where('username', '=', $this->request->post('username'))->find();
+				
+				if($user->loaded() !== TRUE){
+					return;
+				}
+				if($user->password === Auth::instance()->hash($this->request->post('password'))){
+					if($user->verified == 0){
+						$this->body->error = 'You have not verified your email address. You must do this before you can log in.';
+					}else{
+						$this->body->error = 'For security reasons, please wait until an admin approves your account.';
+					}
+				}
 			}
 		}
 	}
@@ -140,36 +153,33 @@ The Admin System.
 			$this->request->redirect('users/login?from=users/authorise');
 		}
 		
-		
 		$this->body = new View('users/authorise');
 		
-		if($this->request->param('id')){
-			$user = ORM::factory('user')->where('username', '=', $this->request->param('id'))->find();
+		$session = Session::instance();
+		
+		if($username = $session->get_once('user_authorise_username', FALSE)){
+			$this->body->authorised = $username;
+		}
+		
+		if($this->request->method() === Request::POST && Security::check($this->request->post('token')) === true){
+			$user = ORM::factory('user')->where('username', '=', $this->request->post('username'))->find();
 			if ($user->loaded()){
 				
 				$login_role = ORM::factory('role',array('name' => 'login'));
 				
 				$user->add('roles', $login_role);
 				
-				$this->body = new View('users/authorised');
-				$this->body->authuser = $user;
 				$this->email_user_active($user->email, $user->username);
+				
+				$session->set('user_authorise_username', $user->username)
+						->write();
 			}
 			
-		} else {
-			$qry_login = DB::select('*')->from('roles_users')
-						->where('roles_users.user_id', '=', DB::expr('user.id'))
-						->where('roles_users.role_id', '=', '1');
-						
-			$qry = ORM::factory('user')
-						->select('*')
-						->where('verified', '=', '1')
-						->where(NULL, 'not exists', $qry_login)
-						->find_all();
+			$this->request->redirect('users/authorise'); // This means that we don't break the back button
 			
-			$this->body->users = $qry;
+		} else {
+			$this->body->users = ORM::factory('user')->not_verified()->find_all();
 		}
-		
 		
 	}
 	
