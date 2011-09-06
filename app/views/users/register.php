@@ -3,14 +3,14 @@
 <?php echo Form::open('users/register') ?>
 	<div>
 		<label for="username">Username</label>
-		<?php echo Form::input('username', '', array('id'=>'username')) ?>
+		<?php echo Form::input('username', isset($data) === true ? $data['username'] : '', array('id'=>'username')) ?>
 		<?php if(isset($errors, $errors['username']) === true): ?>
 			<p class="error"><?php echo $errors['username'] ?></p>
 		<?php endif ?>
 	</div>
 	<div>
 		<label for="email">Email</label>
-		<?php echo Form::input('email', '', array('id'=>'email')) ?>
+		<?php echo Form::input('email', isset($data) === true ? $data['email'] : '', array('id'=>'email')) ?>
 		<?php if(isset($errors, $errors['email']) === true): ?>
 			<p class="error"><?php echo $errors['email'] ?></p>
 		<?php endif ?>

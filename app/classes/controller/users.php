@@ -53,6 +53,7 @@ class Controller_Users extends Controller{
 				$this->body = new View('users/registered');
 			}catch(ORM_Validation_Exception $e){
 				$this->body->errors = Arr::flatten($e->errors('model'));
+				$this->body->data = $user->as_array();
 			}
 		}
 	}
