@@ -77,6 +77,9 @@ class Model_Plugin extends ORM{
 			'dependencies' => array(
 				array('Model_Plugin::formatAliases'),
 			),
+			'library' => array(
+				array('Model_Plugin::makeBool'),
+			),
 			TRUE => array(
 				array('trim'),
 			),
@@ -174,5 +177,14 @@ WHERE plugins_versions.plugin_id = :id'
 // There can be more than one alias. Callback to format these and make commas uniform ("a, b", "a ,    b", "a,b"). 
 	public static function formatAliases($aliases){
 		return preg_replace('/\s*,\s*/', ', ', $aliases);
+	}
+
+// Used for checkboxes. Makes truey values 1 and everything else 0
+	public static function makeBool($val){
+		if($val == 1){
+			return 1;
+		}else{
+			return 0;
+		}
 	}
 } 

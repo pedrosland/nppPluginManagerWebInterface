@@ -92,6 +92,11 @@ echo Form::open(null, array('class'=>'ajax')) ?>
 		<p class="error"><?php echo $errors['max_version'] ?></p>
 	<?php endif ?>
 	</div>
+	<div>
+		<label for="library">Library</label>
+		<?php echo Form::checkbox('library', 1, (bool) $validate->library, array('id'=>'library')) ?>
+		<p class="example">TODO: come up with better wording. This makes the plugin not show up on the plugin manager list. Only use this if it is to be used by other extensions and provides no additional functionality directly to Npp.</p>
+	</div>
 	<fieldset id="versions">
 		<legend>Versions</legend>
 		<p>If your plugin reports an incorrect version this can be used to override it. The comment is optional.</p>

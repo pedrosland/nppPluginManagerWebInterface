@@ -36,6 +36,7 @@ CREATE TABLE `plugins` (
   `min_version` varchar(11) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
   `max_version` varchar(11) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
   `dependencies` text,
+  `library` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

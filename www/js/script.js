@@ -66,6 +66,12 @@ $(function(){
 		$('<a>').text('Add').click(addVersion).attr('href', '#')
 	);
 	
+/*	$('#library').change(toggleLibrary);
+	
+	if($('#library').prop('checked')){
+		toggleLibrary();
+	}*/
+	
 	$('#body form.ajax').submit(formSubmit);
 	
 	lastVersion = $('#versions .version').length;
@@ -447,3 +453,8 @@ function addVersion(){
 	lastVersion++;
 	return false;
 }
+
+/*function toggleLibrary(){
+	$('#unicode div').eq(0).toggle();
+	$('#ansi div').eq(0).toggle();
+}*/
