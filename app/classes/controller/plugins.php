@@ -14,8 +14,11 @@ class Controller_Plugins extends Controller{
 		$model_plugin = new Model_Plugin();
 		
 		$this->body = new View('plugins/index');
-		
-		$this->body->plugins = $model_plugin->find_all();
+		if ($this->request->query('order') == 'lastmod') {
+			$this->body->plugins = $model_plugin->order_by('last_modified','DESC')->find_all();
+		} else {
+			$this->body->plugins = $model_plugin->find_all();
+		}
 	}
 	
 	public function action_add(){

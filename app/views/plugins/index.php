@@ -11,7 +11,8 @@
 <table class="w100">
 	<thead>
 		<tr>
-			<th rowspan="2">Name</th>
+			<th rowspan="2"><?php echo HTML::anchor('plugins/?order=lastmod', 'Last Modified') ?></th>
+			<th rowspan="2"><?php echo HTML::anchor('plugins/', 'Name') ?></th>
 			<th colspan="2">Latest Version</th>
 			<th rowspan="2">Description</th>
 			<th rowspan="2">Author</th>
@@ -30,6 +31,8 @@
 	<tbody>
 <?php foreach($plugins as $plugin): ?>
 		<tr>
+			<td><?php echo $plugin->last_modified ?></td>
+			
 			<td><?php echo HTML::anchor('plugins/view/' . $plugin->url, $plugin->name) ?></td>
 			<td><?php echo $plugin->ansi_version ?></td>
 			<td><?php echo $plugin->unicode_version ?></td>
