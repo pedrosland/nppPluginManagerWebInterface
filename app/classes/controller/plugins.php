@@ -22,6 +22,9 @@ class Controller_Plugins extends Controller{
 		$plugin = new Model_Plugin();
 		
 		$plugin->values($_POST);
+
+		$plugin->last_modified = date('Y-m-d H:i:s');
+                $plugin->last_mod_user = $this->user->username;
 		
 		$this->body = new View('plugins/add');
 		
@@ -149,6 +152,9 @@ class Controller_Plugins extends Controller{
 		$plugin->values($_POST);
 		
 		$this->body = new View('plugins/add');
+		
+		$plugin->last_modified = date('Y-m-d H:i:s');
+                $plugin->last_mod_user = $this->user->username;
 		
 		$steps = array();
 		$ansi_install_steps = array();
@@ -439,6 +445,9 @@ class Controller_Plugins extends Controller{
 					
 					$plugin_url = Url::title($xml['name']);
 					
+					$plugin->last_modified = date('Y-m-d H:i:s');
+			                $plugin->last_mod_user = $this->user->username;
+
 					$plugin->name = $xml['name'];
 					$plugin->url = $plugin_url;
 					
@@ -602,6 +611,9 @@ class Controller_Plugins extends Controller{
 					
 					$plugin_url = Url::title($xml['name']);
 					
+					$plugin->last_modified = date('Y-m-d H:i:s');
+			                $plugin->last_mod_user = $this->user->username;
+
 					$plugin->name = $xml['name'];
 					$plugin->url = $plugin_url;
 					$plugin->unicode_version = (string) $xml->unicodeVersion;
