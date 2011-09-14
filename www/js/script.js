@@ -25,9 +25,9 @@ $(function(){
 	
 	if(!hasPlaceholders){
 		// Darn. We don't have html5 placeholders. We will simulate instead.
-		$('#header form label').addClass('prompt');
-		
 		$('#header form input').mouseover(hidePlaceholder).focus(hidePlaceholder).mouseout(showPlaceholder).blur(showPlaceholder);
+		
+		$('#header form input').trigger('mouseout');
 	}
 	
 	$('.i_url').live('blur', promptForMd5Check).live('focus', showFiles);
@@ -85,6 +85,8 @@ function hidePlaceholder(e){
 		hoverElem = this;
 	}else if(e.type === 'focus'){
 		focusElem = this;
+	}else if(e.target.value != ''){
+		return;
 	}
 	$('label[for='+this.id+']').removeClass('prompt');
 }
@@ -95,7 +97,9 @@ function showPlaceholder(e){
 	}else{
 		focusElem = null;
 	}
-	$('label[for='+this.id+']').addClass('prompt');
+	if(e.target.value == ''){
+		$('label[for='+this.id+']').addClass('prompt');
+	}
 }
 
 //var unicodeChecking;
