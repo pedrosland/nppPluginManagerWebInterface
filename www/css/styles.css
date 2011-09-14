@@ -56,6 +56,7 @@ h2{
 #login label.prompt{
 	left: 24.5em;
 	text-indent: 0;
+	text-transform: lowercase;
 }
 
 input.submit, #body .ui-button, #header input.submit{
