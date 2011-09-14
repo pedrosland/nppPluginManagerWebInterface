@@ -85,8 +85,6 @@ function hidePlaceholder(e){
 		hoverElem = this;
 	}else if(e.type === 'focus'){
 		focusElem = this;
-	}else if(e.target.value != ''){
-		return;
 	}
 	$('label[for='+this.id+']').removeClass('prompt');
 }
