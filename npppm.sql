@@ -38,6 +38,7 @@ CREATE TABLE `plugins` (
   `dependencies` text,
   `last_modified` datetime,
   `last_mod_user` varchar(30),
+  `library` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

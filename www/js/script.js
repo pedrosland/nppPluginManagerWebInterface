@@ -25,9 +25,9 @@ $(function(){
 	
 	if(!hasPlaceholders){
 		// Darn. We don't have html5 placeholders. We will simulate instead.
-		$('#header form label').addClass('prompt');
-		
 		$('#header form input').mouseover(hidePlaceholder).focus(hidePlaceholder).mouseout(showPlaceholder).blur(showPlaceholder);
+		
+		$('#header form input').trigger('mouseout');
 	}
 	
 	$('.i_url').live('blur', promptForMd5Check).live('focus', showFiles);
@@ -66,6 +66,12 @@ $(function(){
 		$('<a>').text('Add').click(addVersion).attr('href', '#')
 	);
 	
+/*	$('#library').change(toggleLibrary);
+	
+	if($('#library').prop('checked')){
+		toggleLibrary();
+	}*/
+	
 	$('#body form.ajax').submit(formSubmit);
 	
 	lastVersion = $('#versions .version').length;
@@ -89,7 +95,9 @@ function showPlaceholder(e){
 	}else{
 		focusElem = null;
 	}
-	$('label[for='+this.id+']').addClass('prompt');
+	if(e.target.value == ''){
+		$('label[for='+this.id+']').addClass('prompt');
+	}
 }
 
 //var unicodeChecking;
@@ -447,3 +455,8 @@ function addVersion(){
 	lastVersion++;
 	return false;
 }
+
+/*function toggleLibrary(){
+	$('#unicode div').eq(0).toggle();
+	$('#ansi div').eq(0).toggle();
+}*/
