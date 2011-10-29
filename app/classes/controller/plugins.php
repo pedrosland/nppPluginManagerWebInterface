@@ -842,10 +842,10 @@ class Controller_Plugins extends Controller{
 			// Attributes don't seem to need HTML::chars
 			$pluginX['name'] = $plugin->name;
 			
-			if($plugin->ansi_version){
+			if($plugin->ansi_version && !$plugin->library){
 				$pluginX->addChild('ansiVersion', $plugin->ansi_version);
 			}
-			if($plugin->unicode_version){
+			if($plugin->unicode_version && !$plugin->library){
 				$pluginX->addChild('unicodeVersion', $plugin->unicode_version);
 			}
 			
