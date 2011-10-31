@@ -14,11 +14,12 @@ class Controller_Plugins extends Controller{
 		$model_plugin = new Model_Plugin();
 		
 		$this->body = new View('plugins/index');
+		
 		if ($this->request->query('order') == 'lastmod') {
-			$this->body->plugins = $model_plugin->order_by('last_modified','DESC')->find_all();
-		} else {
-			$this->body->plugins = $model_plugin->find_all();
+			$model_plugin->order_by('last_modified','DESC');
 		}
+		
+		$this->body->plugins = $model_plugin->find_all();
 	}
 	
 	public function action_add(){
@@ -27,7 +28,7 @@ class Controller_Plugins extends Controller{
 		$plugin->values($_POST);
 
 		$plugin->last_modified = date('Y-m-d H:i:s');
-                $plugin->last_mod_user = $this->user->username;
+		$plugin->last_mod_user = $this->user->username;
 		
 		$this->body = new View('plugins/add');
 		
