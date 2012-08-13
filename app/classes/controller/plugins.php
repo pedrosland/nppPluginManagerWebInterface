@@ -787,6 +787,8 @@ class Controller_Plugins extends Controller{
 			
 			$model->validate = $childElem['validate'] == 'true' ? 1 : 0;
 			$model->backup = $childElem['backup'] == 'true' ? 1 : 0;
+			$model->replace = $childElem['replace'] == 'true' ? 1 : 0;
+			$model->isgpup = $childElem['isGpup'] == 'true' ? 1 : 0;
 		}elseif($childName == 'delete'){
 			$model = new Model_Steps_Delete();
 			
@@ -874,6 +876,11 @@ class Controller_Plugins extends Controller{
 			if($plugin->description){
 				$pluginX->addChild('description', HTML::chars(str_replace("\n", '\n', $plugin->description)));
 			}
+			
+			if($plugin->library){
+				$pluginX->addChild('isLibrary', 'true');
+			}
+
 			if($plugin->author){
 				$pluginX->addChild('author', HTML::chars($plugin->author));
 			}
@@ -1075,6 +1082,13 @@ class Controller_Plugins extends Controller{
 				if($step->backup){
 					$copyX['backup'] = 'true';
 				}
+				if($step->replace){
+					$copyX['replace'] = 'true';
+				}
+				if($step->isgpup){
+					$copyX['isGpup'] = 'true';
+				}
+
 			}elseif($step->url !== null){
 				$downloadX = $xml->addChild('download', HTML::chars($step->url));
 			}elseif($step->run !== null){
